@@ -138,6 +138,14 @@ public class BinarySearchTree<T extends Comparable<T>>
     }
 
     /**
+     * Removes the root of the tree
+     * @return The data of the root node
+     */
+    public T removeRoot() {
+        return remove(root.getData());
+    }
+
+    /**
      * Returns the height of the tree
      *
      * @return The height
@@ -185,7 +193,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      *
      * @param root The root of the tree
      */
-    private void printInOrder(BinaryNode<T> root)
+    protected void printInOrder(BinaryNode<T> root)
     {
         if(root != null)
         {
@@ -201,7 +209,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      *
      * @param root The root of the tree
      */
-    private void printReverseOrder(BinaryNode<T> root)
+    protected void printReverseOrder(BinaryNode<T> root)
     {
         if(root != null)
         {
@@ -217,7 +225,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      *
      * @param root The root of the tree
      */
-    private void printPreOrder(BinaryNode<T> root)
+    protected void printPreOrder(BinaryNode<T> root)
     {
         if(root != null)
         {
@@ -233,7 +241,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      *
      * @param root The root of the tree
      */
-    private void printPostOrder(BinaryNode<T> root)
+    protected void printPostOrder(BinaryNode<T> root)
     {
         if(root != null)
         {
@@ -249,7 +257,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      * @param root The root of the tree
      * @return The height
      */
-    private int height(BinaryNode<T> root)
+    protected int height(BinaryNode<T> root)
     {
         if(root == null)
         {
@@ -269,7 +277,7 @@ public class BinarySearchTree<T extends Comparable<T>>
      * @param data The data to remove
      * @return The node removed
      */
-    private BinaryNode<T> remove(BinaryNode<T> root, T data)
+    protected BinaryNode<T> remove(BinaryNode<T> root, T data)
     {
         if(root == null)
         {
