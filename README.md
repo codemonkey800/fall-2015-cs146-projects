@@ -5,7 +5,7 @@ Some sort of tree project or something.
 
 > Version 1, December 2009
 
-> Copyright (C) 2009 Philip Sturgeon <me@philsturgeon.uk>
+> Copyright (C) 2015 Jeremy Asuncion <jeremyasuncion808@gmail.com>
  
  Everyone is permitted to copy and distribute verbatim or modified
  copies of this license document, and changing it is allowed as long
