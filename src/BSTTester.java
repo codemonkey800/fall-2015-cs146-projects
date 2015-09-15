@@ -19,5 +19,10 @@ public class BSTTester
             bst.insert(rand.nextInt(max - min) + min);
             new TreePrinter(bst).print("BST");
         }
+
+        while(!bst.isEmpty()) {
+            bst.remove(bst.getRoot().getData());
+            new TreePrinter(bst).print("BST");
+        }
     }
 }

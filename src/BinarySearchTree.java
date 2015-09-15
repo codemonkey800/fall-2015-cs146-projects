@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 /**
  * An implementation of a binary search tree
  */
@@ -13,295 +15,145 @@ public class BinarySearchTree<T extends Comparable<T>>
         root = null;
     }
 
-    /**
-     * Inserts new data into the tree
-     *
-     * @param data The data to insert
-     */
-    public void insert(T data)
+    public void empty()
     {
-        if(root == null)
-        {
-            root = new BinaryNode<>(data);
-        }
-        else
-        {
-            BinaryNode<T> node = root;
-            boolean inserted = false;
-            while(!inserted)
-            {
-                if(node.getData().compareTo(data) > 0)
-                {
-                    if(node.getLeft() == null)
-                    {
-                        node.setLeft(new BinaryNode<>(data));
-                        inserted = true;
-                    }
-                    else
-                    {
-                        node = node.getLeft();
-                    }
-                }
-                else
-                {
-                    if(node.getRight() == null)
-                    {
-                        node.setRight(new BinaryNode<>(data));
-                        inserted = true;
-                    }
-                    else
-                    {
-                        node = node.getRight();
-                    }
-                }
-            }
-        }
+        root = null;
     }
 
-    /**
-     * Determines if a certain value is inside the tree
-     *
-     * @param data The data to find
-     * @return True if the tree has the data ,false otherwise
-     */
-    public boolean contains(T data)
+    public boolean isEmpty()
     {
-        BinaryNode<T> node = root;
-        while(node != null && node.getData().compareTo(data) != 0)
-        {
-            if(node.getData().compareTo(data) > 0)
-            {
-                node = node.getLeft();
-            }
-            else
-            {
-                node = node.getRight();
-            }
-        }
-        return node == null;
+        return root == null;
     }
 
-    /**
-     * Removes data from the tree if it exists
-     *
-     * @param data The data to remove
-     * @return The data removed, or null if it didn't exist
-     */
-    public T remove(T data)
-    {
-        BinaryNode<T> node = remove(root, data);
-        return node == null ? null : node.getData();
-    }
-
-    public T getMinimum()
-    {
-        if(root == null)
-        {
-            return null;
-        }
-        else
-        {
-            BinaryNode<T> node = root;
-            while(node.getLeft() != null)
-            {
-                node = node.getLeft();
-            }
-            return node.getData();
-        }
-    }
-
-    public T getMaximum()
-    {
-        if(root == null)
-        {
-            return null;
-        }
-        else
-        {
-            BinaryNode<T> node = root;
-            while(node.getRight() != null)
-            {
-                node = node.getRight();
-            }
-            return node.getData();
-        }
-    }
-
-    /**
-     * Returns the root of the tree
-     *
-     * @return The root
-     */
     public BinaryNode<T> getRoot()
     {
         return root;
     }
 
-    /**
-     * Removes the root of the tree
-     * @return The data of the root node
-     */
-    public T removeRoot() {
-        return remove(root.getData());
-    }
-
-    /**
-     * Returns the height of the tree
-     *
-     * @return The height
-     */
-    public int height()
-    {
+    public int height() {
         return height(root);
     }
 
-    /**
-     * Prints the contents of the tree in order
-     */
-    public void printInOrder()
-    {
-        printInOrder(root);
-    }
-
-    /**
-     * Prints the contents of the tree in reverse order
-     */
-    public void printReverseOrder()
-    {
-        printReverseOrder(root);
-    }
-
-    /**
-     * Prints the contents of the tree in pre order
-     */
-    public void printPreOrder()
-    {
-        printPreOrder(root);
-    }
-
-    /**
-     * Prints the contents of the tree in post order
-     */
-    public void printPostOrder()
-    {
-        printPostOrder(root);
-    }
-
-    /**
-     * Recursive helper method for printing the contents of the tree
-     * in order
-     *
-     * @param root The root of the tree
-     */
-    protected void printInOrder(BinaryNode<T> root)
-    {
-        if(root != null)
-        {
-            printInOrder(root.getLeft());
-            System.out.println(root.getData());
-            printInOrder(root.getRight());
+    protected int height(BinaryNode<T> root) {
+        if(root == null) {
+            return -1;
+        } else {
+            return Math.max(height(root.getLeft()), height(root.getRight())) + 1;
         }
     }
 
-    /**
-     * Recursive helper method for printing the contents
-     * of the tree in reverse order
-     *
-     * @param root The root of the tree
-     */
-    protected void printReverseOrder(BinaryNode<T> root)
+    public boolean contains(T data)
     {
-        if(root != null)
-        {
-            printReverseOrder(root.getRight());
-            System.out.println(root.getData());
-            printReverseOrder(root.getLeft());
-        }
+        return contains(data, root);
     }
 
-    /**
-     * Recursive helper method for printing the
-     * contents of the tree in pre order
-     *
-     * @param root The root of the tree
-     */
-    protected void printPreOrder(BinaryNode<T> root)
-    {
-        if(root != null)
-        {
-            System.out.println(root.getData());
-            printPreOrder(root.getLeft());
-            printPreOrder(root.getRight());
-        }
-    }
-
-    /**
-     * Recursive helper method for printing the contents
-     * of the tree in post order
-     *
-     * @param root The root of the tree
-     */
-    protected void printPostOrder(BinaryNode<T> root)
-    {
-        if(root != null)
-        {
-            printPostOrder(root.getLeft());
-            printPostOrder(root.getRight());
-            System.out.println(root.getData());
-        }
-    }
-
-    /**
-     * Recursive helper method that returns the height of the tree
-     *
-     * @param root The root of the tree
-     * @return The height
-     */
-    protected int height(BinaryNode<T> root)
+    protected boolean contains(T data, BinaryNode<T> root)
     {
         if(root == null)
         {
-            return -1;
+            return false;
+        }
+
+        int compareResult = root.getData().compareTo(data);
+
+        if(compareResult > 0)
+        {
+            return contains(data, root.getLeft());
+        }
+        else if(compareResult < 0)
+        {
+            return contains(data, root.getRight());
         }
         else
         {
-            return 1 + Math.max(height(root.getLeft()), height(root.getRight()));
+            return true;
         }
     }
 
-    /**
-     * Recursive helper method that removes the data from the
-     * tree if it exists
-     *
-     * @param root The tree to remove the data from
-     * @param data The data to remove
-     * @return The node removed
-     */
-    protected BinaryNode<T> remove(BinaryNode<T> root, T data)
-    {
-        if(root == null)
-        {
+    public T findMin() {
+        BinaryNode<T> node = findMin(root);
+        return node == null ? null : node.getData();
+    }
+
+    protected BinaryNode<T> findMin(BinaryNode<T> root) {
+        if(root == null) {
+            return null;
+        } else if(root.getLeft() == null) {
+            return root;
+        } else {
+            return findMin(root.getLeft());
+        }
+    }
+
+    public T findMax() {
+        BinaryNode<T> node = findMax(root);
+        return node == null ? null : node.getData();
+    }
+
+    protected BinaryNode<T> findMax(BinaryNode<T> root) {
+        if(root == null) {
+            return null;
+        } else if(root.getRight() == null) {
+            return root;
+        } else {
+            return findMin(root.getRight());
+        }
+    }
+
+    public void insert(T data) {
+        root = insert(data, root);
+    }
+
+    protected BinaryNode<T> insert(T data, BinaryNode<T> root) {
+        if(root == null) {
+            return new BinaryNode<>(data);
+        }
+
+        int compareResult = root.getData().compareTo(data);
+
+        if(compareResult > 0) {
+            root.setLeft(insert(data, root.getLeft()));
+        } else if(compareResult < 0) {
+            root.setRight(insert(data, root.getRight()));
+        }
+
+        return root;
+    }
+
+    public void remove(T data) {
+        root = remove(data, root);
+    }
+
+    protected BinaryNode<T> remove(T data, BinaryNode<T> root) {
+        if(root == null) {
             return null;
         }
 
         int compareResult = root.getData().compareTo(data);
 
         if(compareResult > 0) {
-            root.setLeft(remove(root.getLeft(), data));
+            root.setLeft(remove(data, root.getLeft()));
         } else if(compareResult < 0) {
-            root.setRight(remove(root.getRight(), data));
+            root.setRight(remove(data, root.getRight()));
         } else if(root.getLeft() != null && root.getRight() != null) {
-            BinaryNode<T> minNode = root.getRight();
-            while(minNode.getLeft() != null) {
-                minNode = minNode.getLeft();
-            }
-
-            root.setData(minNode.getData());
-            root.setRight(remove(root.getRight(), minNode.getData()));
+            root.setData(findMin(root.getRight()).getData());
+            root.setRight(remove(root.getData(), root.getRight()));
         } else {
             root = root.getLeft() != null ? root.getLeft() : root.getRight();
         }
 
         return root;
+    }
+
+    public void printTree() {
+        printTree(root);
+    }
+
+    protected void printTree(BinaryNode<T> root) {
+        if(root != null) {
+            printTree(root.getLeft());
+            System.out.println(root.getData());
+            printTree(root.getRight());
+        }
     }
 }
