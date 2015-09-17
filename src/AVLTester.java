@@ -17,6 +17,11 @@ public class AVLTester
             avl.insert(rand.nextInt(max - min) + min);
             new TreePrinter(avl).print("AVL Tree");
         }
+
+        while(!avl.isEmpty()) {
+            avl.remove(avl.getRoot().getData());
+            new TreePrinter(avl).print("Removing Root AVL Tree");
+        }
     }
 
 }

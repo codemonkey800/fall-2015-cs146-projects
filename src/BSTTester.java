@@ -22,7 +22,7 @@ public class BSTTester
 
         while(!bst.isEmpty()) {
             bst.remove(bst.getRoot().getData());
-            new TreePrinter(bst).print("BST");
+            new TreePrinter(bst).print("Removing Root BST");
         }
     }
 }

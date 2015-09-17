@@ -3,97 +3,83 @@
  */
 public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T>
 {
-    BinaryNode<T> root;
+    private static final int ALLOWED_IMBALANCE = 1;
 
 
-    public AVLTree()
+    @Override
+    protected BinaryNode<T> insert(T data, BinaryNode<T> root)
     {
-        root = null;
+        return balance(super.insert(data, root));
     }
 
-    public BinaryNode<T> insert(T data, BinaryNode<T> d)
+    @Override
+    protected BinaryNode<T> remove(T data, BinaryNode<T> root)
     {
-        super.insert(data);
-        return balance(d);
+        return balance(super.remove(data, root));
     }
 
-    public BinaryNode<T> balance(BinaryNode<T> r)
+    private BinaryNode<T> balance(BinaryNode<T> root)
     {
-        if(r == null)
+        if(root == null)
         {
             return null;
         }
 
-        if(height(r.getLeft()) - height(r.getRight()) > 1)
+        if(height(root.getLeft()) - height(root.getRight()) > 1)
         {
-            if(height(r.getLeft().getLeft()) >= height(r.getLeft().getRight()))
+            if(height(root.getLeft().getLeft()) >= height(root.getLeft().getRight()))
             {
-                r = singleRightRotation(r);
+                root = singleRightRotation(root);
             }
             else
             {
-                r = doubleLeftRightRotation(r);
+                root = doubleLeftRightRotation(root);
             }
         }
-        else if(height(r.getRight()) - height(r.getLeft()) > 1)
+        else if(height(root.getRight()) - height(root.getLeft()) > 1)
         {
-            if(height(r.getRight().getRight()) >= height(r.getRight().getLeft()))
+            if(height(root.getRight().getRight()) >= height(root.getRight().getLeft()))
             {
-                r = singleLeftRotation(r);
+                root = singleLeftRotation(root);
             }
             else
             {
-                r = doubleRightLeftRotation(r);
+                root = doubleRightLeftRotation(root);
             }
         }
-        return r;
 
+        return root;
     }
 
-    //single rotation on left child
-    public BinaryNode<T> singleRightRotation(BinaryNode<T> b)
+    private BinaryNode<T> singleRightRotation(BinaryNode<T> k2)
     {
-        BinaryNode<T> a = b.getLeft();
-        b.setLeft(a.getRight());
-        a.setRight(b);
-        System.out.println("Single right rotation: " + b.getData());
-        return a;
-
+        BinaryNode<T> k1 = k2.getLeft();
+        k2.setLeft(k1.getRight());
+        k1.setRight(k2);
+        k2.setHeight(Math.max(height(k2.getLeft()), height(k2.getRight())) + 1);
+        k1.setHeight(Math.max(height(k1.getLeft()), k2.getHeight()) + 1);
+        return k1;
     }
 
-    //single rotation on right child
-    public BinaryNode<T> singleLeftRotation(BinaryNode<T> b)
+    private BinaryNode<T> singleLeftRotation(BinaryNode<T> k1)
     {
-        BinaryNode<T> c = b.getRight();
-        b.setRight(c.getLeft());
-        c.setLeft(b);
-        System.out.println("Single left rotation: " + b.getData());
-        return c;
-
+        BinaryNode<T> k2 = k1.getRight();
+        k1.setRight(k2.getLeft());
+        k2.setLeft(k1);
+        k1.setHeight(Math.max(height(k1.getLeft()), height(k1.getRight())) + 1);
+        k2.setHeight(Math.max(height(k2.getRight()), k1.getHeight()) + 1);
+        return k2;
     }
 
-    //double rotation on left child
-    public BinaryNode<T> doubleLeftRightRotation(BinaryNode<T> c)
+    private BinaryNode<T> doubleLeftRightRotation(BinaryNode<T> k3)
     {
-        System.out.println("Double left-right rotation: " + c.getData());
-        c.setLeft(singleLeftRotation(c.getLeft()));
-        return singleRightRotation(c);
+        k3.setLeft(singleLeftRotation(k3.getLeft()));
+        return singleRightRotation(k3);
     }
 
-    //double rotation on right child
-    public BinaryNode<T> doubleRightLeftRotation(BinaryNode<T> a)
+    private BinaryNode<T> doubleRightLeftRotation(BinaryNode<T> k1)
     {
-        System.out.println("Double right-left rotation: " + a.getData());
-        a.setRight(singleRightRotation(a.getRight()));
-        return singleLeftRotation(a);
+        k1.setRight(singleRightRotation(k1.getRight()));
+        return singleLeftRotation(k1);
     }
-
-
-    public BinaryNode<T> remove(T data, BinaryNode<T> d)
-    {
-        super.remove(data);
-        return balance(d);
-    }
-
-
 }

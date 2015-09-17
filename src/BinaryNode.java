@@ -3,9 +3,10 @@
  *
  * @param <T> The data type of the node's data
  */
-public final class BinaryNode<T extends Comparable<T>>
+public class BinaryNode<T extends Comparable<T>>
 {
     private T             data;
+    private int           height;
     private BinaryNode<T> left;
     private BinaryNode<T> right;
 
@@ -32,6 +33,7 @@ public final class BinaryNode<T extends Comparable<T>>
         this.data = data;
         this.left = left;
         this.right = right;
+        this.height = 0;
     }
 
     /**
@@ -92,5 +94,15 @@ public final class BinaryNode<T extends Comparable<T>>
     public void setRight(BinaryNode<T> right)
     {
         this.right = right;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
+
+    public void setHeight(int height)
+    {
+        this.height = height;
     }
 }
