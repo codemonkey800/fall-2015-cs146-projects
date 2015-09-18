@@ -5,6 +5,36 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T>
 {
     private static final int ALLOWED_IMBALANCE = 1;
 
+    private boolean shouldPrintRotations;
+
+    public AVLTree()
+    {
+        this(false);
+    }
+
+    public AVLTree(boolean shouldPrintRotations)
+    {
+        this.shouldPrintRotations = shouldPrintRotations;
+    }
+
+    public boolean isBalanced()
+    {
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(BinaryNode<T> root)
+    {
+        if(root == null)
+        {
+            return true;
+        }
+        else
+        {
+            int leftHeight = height(root.getLeft());
+            int rightHeight = height(root.getRight());
+            return Math.abs(leftHeight - rightHeight) <= 1;
+        }
+    }
 
     @Override
     protected BinaryNode<T> insert(T data, BinaryNode<T> root)
@@ -53,6 +83,10 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T>
 
     private BinaryNode<T> singleRightRotation(BinaryNode<T> k2)
     {
+        if(shouldPrintRotations)
+        {
+            System.out.println("Single Right Rotation: " + k2.getData());
+        }
         BinaryNode<T> k1 = k2.getLeft();
         k2.setLeft(k1.getRight());
         k1.setRight(k2);
@@ -63,6 +97,10 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T>
 
     private BinaryNode<T> singleLeftRotation(BinaryNode<T> k1)
     {
+        if(shouldPrintRotations)
+        {
+            System.out.println("Single Left Rotation: " + k1.getData());
+        }
         BinaryNode<T> k2 = k1.getRight();
         k1.setRight(k2.getLeft());
         k2.setLeft(k1);
@@ -73,12 +111,20 @@ public class AVLTree<T extends Comparable<T>> extends BinarySearchTree<T>
 
     private BinaryNode<T> doubleLeftRightRotation(BinaryNode<T> k3)
     {
+        if(shouldPrintRotations)
+        {
+            System.out.println("Double Left-Right Rotation: " + k3.getData());
+        }
         k3.setLeft(singleLeftRotation(k3.getLeft()));
         return singleRightRotation(k3);
     }
 
     private BinaryNode<T> doubleRightLeftRotation(BinaryNode<T> k1)
     {
+        if(shouldPrintRotations)
+        {
+            System.out.println("Double Right-Left Rotation: " + k1.getData());
+        }
         k1.setRight(singleRightRotation(k1.getRight()));
         return singleLeftRotation(k1);
     }
