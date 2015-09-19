@@ -1,4 +1,4 @@
-Jeremy Asuncion, Phyllis Lau
+Jeremy Asuncion, Phyllis Lau1
 
 Part 2 - Insertion
 for n = 1000
