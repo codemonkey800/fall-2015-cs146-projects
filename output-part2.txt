@@ -1,3 +1,5 @@
+Jeremy Asuncion, Phyllis Lau
+
 Part 2 - Insertion
 for n = 1000
 BST Insertion Time: 2.610742ms
