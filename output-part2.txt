@@ -1,7 +1,45 @@
-Using n = 10,000
-      k = 1,000
+Part 2 - Insertion
+for n = 1000
+BST Insertion Time: 2.610742ms
+AVL Insertion Time: 15.41931ms
 
-BST Insertion Time: 4.780281ms
-AVL Insertion Time: 149.637551ms
-BST Search Time: 0.606567ms
-AVL Search Time: 0.236847ms
+for n = 10000
+BST Insertion Time: 5.377865ms
+AVL Insertion Time: 207.460286ms
+
+for n = 100000
+BST Insertion Time: 19.370924ms
+AVL Insertion Time: 1569.779063ms
+
+for n = 1000000
+BST Insertion Time: 110.499321ms
+AVL Insertion Time: 15011.019878ms
+
+Part 2 - Searching for k nodes in n-node tree (n = 10000)
+for k = 700
+BST Search Time: 0.546078ms
+AVL Search Time: 0.175584ms
+
+for k = 900
+BST Search Time: 0.649401ms
+AVL Search Time: 0.219224ms
+
+for k = 1000
+BST Search Time: 0.731473ms
+AVL Search Time: 0.412924ms
+
+for k = 2500
+BST Search Time: 1.015488ms
+AVL Search Time: 0.575647ms
+
+for k = 5000
+BST Search Time: 2.435216ms
+AVL Search Time: 1.121469ms
+
+for k = 7500
+BST Search Time: 2.323868ms
+AVL Search Time: 1.700538ms
+
+for k = 9000
+BST Search Time: 2.5371ms
+AVL Search Time: 1.665795ms
