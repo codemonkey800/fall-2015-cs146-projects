@@ -1,0 +1,7 @@
+Using n = 10,000
+      k = 1,000
+
+BST Insertion Time: 4.780281ms
+AVL Insertion Time: 149.637551ms
+BST Search Time: 0.606567ms
+AVL Search Time: 0.236847ms

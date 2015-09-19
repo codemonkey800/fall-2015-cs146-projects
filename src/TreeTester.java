@@ -8,8 +8,19 @@ public class TreeTester
         if(args.length == 0)
         {
             System.out.println("Usage 1: java TreeTester part1 bst|avl");
-            System.out.println("Usage 2: java TreeTester part2 n k");
-            System.out.println("n is used for insertion, k is used for search");
+            System.out.println("Usage 2: java TreeTester part2 n k m");
+            System.out.println();
+            System.out.println("Positional arguments:");
+            System.out.println("    part1 - Runs code for part 1 of the project");
+            System.out.println("    part2 - Runs code for part 2 of the project");
+            System.out.println();
+            System.out.println("part1");
+            System.out.println("    bst - Runs insertion and removal for binary search trees");
+            System.out.println("    avl - Runs insertion and removal for AVL trees");
+            System.out.println();
+            System.out.println("part2");
+            System.out.println("    n - How many random numbers to generate for insertion");
+            System.out.println("    k - How many random numbers to generate for searching");
             return;
         }
 

@@ -4,3 +4,11 @@ sourceSets {
     main.java.srcDir 'src'
     test.java.srcDir 'test'
 }
+
+jar {
+    baseName 'project2'
+
+    manifest {
+        attributes 'Main-Class': 'TreeTester'
+    }
+}

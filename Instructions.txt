@@ -1,0 +1,24 @@
+Jeremy Asuncion, Phyllis Lau
+
+Building:
+    If you have Gradle, run "gradle build." There should be a jar file located
+    at build/libs/project2.jar. 
+
+    If you use Eclipse, open the src folder and compile the code.
+
+    If you use the command line, run "mkdir bin && javac src/*.java && mv src/*.class bin".
+    The class files should be in the bin folder.
+
+Part 1:
+    1. Open and locate bin folder in command line
+    2. Type in [java TreeTester part1 bst] to generate random BST by insertion, 
+       followed by continuously removing the root node.
+    3. Type in [java TreeTester part1 avl] to generate random AVL Tree by insertion, 
+       followed by continuously removing the root node.
+
+Part 2:
+    1. Select any n and k
+    2. Type in [java TreeTester part2 n k] to print out how long it takes to insert 
+       random integers in both initially empty BST and AVL Tree, 
+       as well as print out how long it takes for both n-node trees to search for all k random integers.
+

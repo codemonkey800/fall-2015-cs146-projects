@@ -15,3 +15,10 @@ hs_err_pid*
 .idea
 build/
 *.iml
+
+# Gradle shit
+.gradle
+
+# Build shit
+bin
+build
