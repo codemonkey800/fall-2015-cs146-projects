@@ -1,5 +1,5 @@
-# Fall 2015 CS146 Project 2
-Some sort of tree project or something.
+# Fall 2015 CS146 Projects
+A bunch of projects for CS146, some of them are partner projects.
 
 # DON'T BE A DICK PUBLIC LICENSE
 
