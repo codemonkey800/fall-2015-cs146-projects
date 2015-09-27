@@ -6,7 +6,7 @@
  *            constraints on E such that E is now a Comparable.
  */
 public class BinarySearchTree<E extends Comparable<? super E>> implements
-        DataCounter<E> {
+                                                               DataCounter<E> {
 
     /**
      * The root of the binary search tree. root is null if and only if the tree
@@ -67,33 +67,35 @@ public class BinarySearchTree<E extends Comparable<? super E>> implements
         size = 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void incCount(E data) {
-        if (overallRoot == null) {
+        if(overallRoot == null) {
             overallRoot = new BSTNode(data);
         } else {
             // traverse the tree
             BSTNode currentNode = overallRoot;
-            while (true) {
+            while(true) {
 
                 // compare the data to be inserted with the data at the current
                 // node
                 int cmp = data.compareTo(currentNode.data);
 
-                if (cmp == 0) {
+                if(cmp == 0) {
                     // current node is a match
                     currentNode.count++;
                     return;
-                } else if (cmp < 0) {
+                } else if(cmp < 0) {
                     // new data goes to the left of the current node
-                    if (currentNode.left == null) {
+                    if(currentNode.left == null) {
                         currentNode.left = new BSTNode(data);
                         return;
                     }
                     currentNode = currentNode.left;
                 } else {
                     // new data goes to the right of the current node
-                    if (currentNode.right == null) {
+                    if(currentNode.right == null) {
                         currentNode.right = new BSTNode(data);
                         return;
                     }
@@ -103,18 +105,36 @@ public class BinarySearchTree<E extends Comparable<? super E>> implements
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getSize() {
         return size;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public DataCount<E>[] getCounts() {
-    	@SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked")
         DataCount<E>[] counts = new DataCount[size];
-        if (overallRoot != null)
+        if(overallRoot != null)
             traverse(overallRoot, counts, 0);
         return counts;
+    }
+
+    /**
+     * Calculates the height of a tree with root {@code root}
+     *
+     * @param root The root of the tree
+     * @return The height of the tree
+     */
+    protected int height(BSTNode root) {
+        if(root == null) {
+            return -1;
+        } else {
+            return Math.max(height(root.left), height(root.right)) + 1;
+        }
     }
 
     /**
@@ -142,7 +162,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> implements
      * @return a textual representation of the tree.
      */
     protected String dump() {
-        if (overallRoot != null)
+        if(overallRoot != null)
             return dump(overallRoot);
         return "<empty tree>";
     }
