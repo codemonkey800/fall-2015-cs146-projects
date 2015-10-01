@@ -9,7 +9,7 @@
  * generic.  You need the String contents to write your hashcode code.
  */
 public class HashTable implements DataCounter<String> {
-    private static final int DEFAULT_SIZE = 17;
+    private static final int DEFAULT_SIZE = 16;
 
     private Node[] array;
 
