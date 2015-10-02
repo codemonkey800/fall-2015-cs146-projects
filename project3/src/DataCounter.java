@@ -26,6 +26,13 @@ class DataCount<E> {
         this.data = data;
         this.count = count;
     }
+    /**
+     * To return a string that tells data and its count
+     * /
+    public String toString()
+    {
+    	return data + ", count: " + count;
+    }
 }
 
 /**
