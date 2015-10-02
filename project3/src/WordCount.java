@@ -18,7 +18,7 @@ public class WordCount {
             System.out.println("-h - Use a Hashtable\n");
             System.out.println("-frequency - Print all the word/frequency pairs, " +
                                "ordered by frequency, and then by the words in" +
-                               "lexicographic order.");
+                               "lexicographic order.\n");
             System.out.println("-num_unique - Print the number of unique words in the document. " +
                                "This is the total number of distinct (different) words in the document. " +
                                "Words that appear more than once are only counted as a single word for " +

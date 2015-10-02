@@ -12,3 +12,23 @@ repositories {
 dependencies {
     testCompile 'junit:junit:4.12'
 }
+
+task wordCountJar(type: Jar, dependsOn: classes) {
+    baseName 'WordCount'
+    manifest {
+        attributes 'Main-Class': 'WordCount'
+    }
+    destinationDir = new File('jars')
+    from sourceSets.main.output.classesDir
+    include '*.class'
+}
+
+task correlatorJar(type: Jar, dependsOn: 'classes') {
+    baseName 'Correlator'
+    manifest {
+        attributes 'Main-Class': 'Correlator'
+    }
+    destinationDir = new File('jars')
+    from sourceSets.main.output.classesDir
+    include '*.class'
+}
