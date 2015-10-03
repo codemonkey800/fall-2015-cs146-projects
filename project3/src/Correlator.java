@@ -76,7 +76,7 @@ public class Correlator {
         for(int i = 0; i < count.length; i++) {
             System.out.println(count[i].count);
 
-            double freq = count[i].count / totalCount;
+            double freq = (double) count[i].count / (double) totalCount;
             System.out.println("frequency for " + count[i].toString() + ": fraction - " + freq);
             if(freq < 0.01 && freq > 0.0001) {
                 frequencies.put(count[i].data, freq);
