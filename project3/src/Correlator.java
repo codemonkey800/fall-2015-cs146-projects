@@ -31,7 +31,7 @@ public class Correlator {
             return;
         }
 
-        System.out.println("Difference metric: " + differenceMetric(count1, count2));
+        System.out.println("\nDifference metric: " + differenceMetric(count1, count2));
 
     }
 
@@ -49,6 +49,7 @@ public class Correlator {
         for(DataCount<String> dataCount : dataCounts) {
             double frequency = (double) dataCount.count / totalCount;
             if(frequency < 0.01 && frequency > 0.0001) {
+                System.out.format("%s - %f\n", dataCount.data, frequency);
                 frequencies.put(dataCount.data, frequency);
             }
         }
@@ -56,16 +57,17 @@ public class Correlator {
     }
 
     private static double differenceMetric(DataCount<String>[] c1, DataCount<String>[] c2) {
-        double sum = 0;
+        System.out.println("Frequencies for first file:");
         Map<String, Double> frequencies1 = frequency(c1);
-        Map<String, Double> frequencies2 = frequency(c2);
-        for(String key1 : frequencies1.keySet()) {
-            for(String key2 : frequencies2.keySet()) {
-                if(key1.equals(key2)) {
 
-                    double diff = Math.abs(frequencies1.get(key1) - frequencies2.get(key2));
-                    sum += diff * diff;
-                }
+        System.out.println("\nFrequencies for second file:");
+        Map<String, Double> frequencies2 = frequency(c2);
+
+        double sum = 0;
+        for(String key : frequencies1.keySet()) {
+            if(frequencies2.containsKey(key)) {
+                double diff = Math.abs(frequencies1.get(key) - frequencies2.get(key));
+                sum += diff * diff;
             }
         }
         return sum;
