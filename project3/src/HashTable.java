@@ -1,39 +1,25 @@
-
-
 /**
- * TODO Replace this comment with your own.
- * <p>
- * Stub code for an implementation of a DataCounter that uses a hash table as
- * its backing data structure. We included this stub so that it's very clear
- * that HashTable works only with Strings, whereas the DataCounter interface is
- * generic.  You need the String contents to write your hashcode code.
+ * An implementation of hashtable mapping strings to
+ * integers. The hashtable uses separate chaining to
+ * for collision reduction.
+ *
+ * @author Jeremy Asuncion
+ * @author Phyllis Lau
  */
 public class HashTable implements DataCounter<String> {
-    private static final int DEFAULT_SIZE = 16;
+    private static final int DEFAULT_BUCKET_COUNT = 16;
 
-    private Node[] array;
+    private Node[] buckets;
 
-    private int currentSize;
+    private int size;
 
     public HashTable() {
-        this(DEFAULT_SIZE);
+        this(DEFAULT_BUCKET_COUNT);
     }
 
-    public HashTable(int arraySize) {
-        array = new Node[arraySize];
-        currentSize = 0;
-
-    }
-
-    class Node {
-        public String data;
-        public int    count;
-        public Node   next;
-
-        public Node(String data) {
-            this.data = data;
-            this.count = 1;
-        }
+    public HashTable(int bucketCount) {
+        this.buckets = new Node[bucketCount];
+        size = 0;
     }
 
     /**
@@ -41,82 +27,127 @@ public class HashTable implements DataCounter<String> {
      */
     @SuppressWarnings("unchecked")
     public DataCount<String>[] getCounts() {
-        DataCount<String>[] dataArray     = new DataCount[currentSize];
-        int                 countForArray = 0;
-        for(int i = 0; i < array.length; i++) {
-            if(array[i] != null) {
-                Node n = array[i];
-                DataCount stuff = new DataCount(n.data, n.count);
-
-                dataArray[countForArray] = stuff;
-                countForArray++;
-                while(n.next != null) {
-                    if(!n.data.equals(n.next.data)) {
-
-
-                        dataArray[countForArray] = new DataCount(n.next.data, n.next.count);
-                        countForArray++;
-                    }
-                    n = n.next;
-                }
+        DataCount<String>[] dataCounts = new DataCount[size];
+        int i = 0;
+        for(Node node : buckets) {
+            for(; node != null; node = node.next) {
+                dataCounts[i++] = new DataCount<>(node.data, node.count);
             }
         }
-
-        return dataArray;
+        return dataCounts;
     }
 
     /**
      * {@inheritDoc}
      */
     public int getSize() {
-        return currentSize;
+        return size;
     }
 
     /**
      * {@inheritDoc}
      */
     public void incCount(String data) {
-        int  h       = hashcode(data);
-        Node n       = new Node(data);
-        Node current = array[h];
-
-        while(current != null) {
-            if(current.data.equals(data)) {
-                current.count++;
-                return;
-            }
-            current = current.next;
+        if(calculateLoadFactor() > 0.75) {
+            rehash();
         }
-        n.next = array[h];
-        array[h] = n;
-        currentSize++;
-
+        if(insert(buckets, data)) size++;
     }
 
+    private boolean insert(Node[] buckets, String data) {
+        int hash = hashString(data) % buckets.length;
+        Node node = buckets[hash];
+        if(node == null) {
+            buckets[hash] = new Node(data);
+            return true;
+        	} 
+	else {
+           	 while(node != null && !node.data.equals(data)) 
+		{
+                	node = node.next;
+            	}
 
-    public int hashcode(String data) {
-        final int multiplier = 29;
-        int       sum        = 0;
-        for(int i = 0; i < data.length(); i++) {
-            sum = sum + data.charAt(i) * multiplier;
-        }
-
-        return sum % array.length;
-
-    }
-
-    public boolean contains(String data) {
-        int  h = hashcode(data);
-        Node n = array[h];
-        while(n != null) {
-            if(n.data.equals(data)) {
-
+            if(node == null) {
+                buckets[hash] = new Node(data, buckets[hash]);
                 return true;
-
+            } else 
+	{
+                node.count++;
+                return false;
             }
-            n = n.next;
         }
-        return false;
     }
 
+    private double calculateLoadFactor() {
+        return (double) size / (double) buckets.length;
+    }
+
+    private void rehash() {
+        Node[] buckets = new Node[this.buckets.length * 2];
+        for(Node node : this.buckets) {
+            for(; node != null; node = node.next) {
+                for(int i = 0; i < node.count; i++) {
+                    insert(buckets, node.data);
+                }
+            }
+        }
+        this.buckets = buckets;
+    }
+
+	private void put(String data, int count)
+	{
+		int hash = hashString(data) % buckets.length;
+        Node node = buckets[hash];
+        if (node != null)
+        {
+        	while(node != null && !node.data.equals(data)) 
+        	{
+                node = node.next;
+        	}
+        	if (node != null)
+        	{
+        		node.count = count;
+        	}
+        	else
+        	{
+        		buckets[hash] = new Node(data, buckets[hash]);
+        		buckets[hash].count = count;
+        	}
+        }
+        else
+        {
+        	buckets[hash] = new Node(data);
+        	buckets[hash].count = count;
+        }
+	
+	}
+
+
+    private int hashString(String str) {
+        final int multiplier = 29;
+        int sum = 0;
+        for(int i = 0; i < str.length(); i++) {
+            sum += str.charAt(i) * multiplier;
+        }
+
+        return sum;
+    }
+
+    private class Node {
+        private String data;
+        private int    count;
+        private Node   next;
+
+        public Node(String data) {
+            this(data, null);
+        }
+
+        public Node(String data, Node next) {
+            this.data = data;
+            this.count = 1;
+            this.next = next;
+        }
+    }
+
+	
 }
