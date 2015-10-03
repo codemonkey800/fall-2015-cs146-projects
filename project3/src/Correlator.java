@@ -4,15 +4,11 @@ import java.util.HashMap;
 /**
  * Program that calculates the correlation between
  * two documents.
+ *
+ * @author Jeremy Asuncion
+ * @author Phyllis Lau
  */
 public class Correlator {
-	
-	private static FileWordReader firstFile;
-	private static FileWordReader secondFile;
-	private static DataCounter<String> wordCounter;
-	private static DataCount<String> [] count1;
-	private static DataCount<String>[] count2;
-	
     public static void main(String[] args) {
         if(args.length != 3) {
             System.out.println("Usage: [-b | -a | -h] <filename 1> <filename 2>\n");
@@ -21,70 +17,33 @@ public class Correlator {
             System.out.println("-h Use a Hashtable in the backend");
             return;
         }
-        
-        
 
-        switch(args[0])
-        {
-        case "-b":
-        	wordCounter = new BinarySearchTree<>();
-        	break;
-        case "-a":
-        	wordCounter = new AVLTree<>();
-        	break;
-        case "-h":
-        	wordCounter = new HashTable();
-        	break;
-        default: 
-        	System.out.println("Invalid choice for first argument");
-        	return;
-        }
-        
-        try
-        {
-        	firstFile = new FileWordReader(args[1]);
-        	count1 = WordCount.countWords(firstFile, wordCounter);
-        	
-        	
-        	
-        }
-        catch(IOException e)
-        {
-        	System.out.println("The file " + args[1] + "does not exist");
-        	return;
-        }
-        
+        DataCount<String>[] count1;
+        DataCount<String>[] count2;
 
-        try
-        {
-        	secondFile = new FileWordReader(args[2]);
-        	count2 = WordCount.countWords(secondFile, wordCounter);
-        	
-        	
+        try {
+            count1 = WordCount.countWords(args[0], args[1]);
+            count2 = WordCount.countWords(args[0], args[2]);
+        } catch(IOException e) {
+            System.out.println("An error occurred while parsing the files!");
+            System.out.println(e.getMessage());
+            return;
         }
-        catch(IOException e)
-        {
-        	System.out.println("The file " + args[2] + "does not exist");
-        	return;
-        }
-        
-        
-        System.out.println("Difference metric: " + differenceMetric(count1,count2));
-        
+
+        System.out.println("Difference metric: " + differenceMetric(count1, count2));
+
     }
-    
-    private static int getTotalCount(DataCount<String>[] count)
-    {
-    	int totalWords = 0;
-    	for (DataCount<String> c: count)
-    	{
-    		totalWords += c.count;
-    	}
+
+    private static int getTotalCount(DataCount<String>[] count) {
+        int totalWords = 0;
+        for(DataCount<String> c : count) {
+            totalWords += c.count;
+        }
         System.out.println("total words: " + totalWords);
         return totalWords;
-        
+
     }
-    
+
 //    private static DataCount<String>[] frequency(DataCount<String>[] count)
 //    {
 //    	int index = 0;
@@ -109,33 +68,29 @@ public class Correlator {
 //}
 
 
-    private static HashMap<String,Double> frequency(DataCount<String>[] count)
-    {
-    	int index = 0;
-    	int totalCount = getTotalCount(count);
-    	System.out.println(totalCount);
-    HashMap<String, Double> frequencies = new HashMap<>();
-    	for (int i  = 0; i < count.length; i++)
-    	{
-    		System.out.println(count[i].count);
-    	
-    		double freq = count[i].count/totalCount;
-    		System.out.println("frequency for " + count[i].toString() + ": fraction - " + freq);
-    		if (freq < 0.01 && freq > 0.0001)
-    		{
-    			frequencies.put(count[i].data, freq);
-    			//frequencies[index].data = count[i].data;
-    			
-    			
-    		}
-    	}	
-    	for (String f : frequencies.keySet())    
-    	{
-    		System.out.print(frequencies.get(f) + " ");
-    	}
-    	return frequencies;	
-}
-    
+    private static HashMap<String, Double> frequency(DataCount<String>[] count) {
+        int index = 0;
+        int totalCount = getTotalCount(count);
+        System.out.println(totalCount);
+        HashMap<String, Double> frequencies = new HashMap<>();
+        for(int i = 0; i < count.length; i++) {
+            System.out.println(count[i].count);
+
+            double freq = count[i].count / totalCount;
+            System.out.println("frequency for " + count[i].toString() + ": fraction - " + freq);
+            if(freq < 0.01 && freq > 0.0001) {
+                frequencies.put(count[i].data, freq);
+                //frequencies[index].data = count[i].data;
+
+
+            }
+        }
+        for(String f : frequencies.keySet()) {
+            System.out.print(frequencies.get(f) + " ");
+        }
+        return frequencies;
+    }
+
 //    private static double differenceMetric(DataCount<String>[] c1, DataCount<String>[] c2)
 //    {
 //    	double sum = 0;
@@ -155,24 +110,20 @@ public class Correlator {
 //    	}
 //    	return sum;
 //    }
-    
-    private static double differenceMetric(DataCount<String>[] c1, DataCount<String>[] c2)
-    {
-    	double sum = 0;
-    	HashMap<String, Double> freq1 = frequency(c1);
-		HashMap<String, Double> freq2 = frequency(c2);
-    	for (String f: freq1.keySet())
-    	{
-    		for (String fr: freq2.keySet())
-    		{
-    			if (f.equals(fr))
-    			{
-    				
-    				double diff = Math.abs(freq1.get(f) - freq2.get(fr));
-    				sum += diff*diff;
-    			}
-    		}
-    	}
-    	return sum;
+
+    private static double differenceMetric(DataCount<String>[] c1, DataCount<String>[] c2) {
+        double sum = 0;
+        HashMap<String, Double> freq1 = frequency(c1);
+        HashMap<String, Double> freq2 = frequency(c2);
+        for(String f : freq1.keySet()) {
+            for(String fr : freq2.keySet()) {
+                if(f.equals(fr)) {
+
+                    double diff = Math.abs(freq1.get(f) - freq2.get(fr));
+                    sum += diff * diff;
+                }
+            }
+        }
+        return sum;
     }
 }

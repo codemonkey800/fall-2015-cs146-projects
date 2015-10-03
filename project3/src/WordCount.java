@@ -26,35 +26,13 @@ public class WordCount {
             return;
         }
 
-        switch(args[0]) {
-            case "-b":
-                wordCounter = new BinarySearchTree<>();
-                break;
-            case "-a":
-                wordCounter = new AVLTree<>();
-                break;
-            case "-h":
-                wordCounter = new HashTable();
-                break;
-            default:
-                System.out.println("Invalid choice for first argument");
-                return;
-        }
-
-        try {
-            fileWordReader = new FileWordReader(args[2]);
-        } catch(IOException e) {
-            System.out.println("The file \"" + args[2] + "\" does not exist");
-            return;
-        }
-
         try {
             switch(args[1]) {
                 case "-frequency":
-                    countWordFrequencies();
+                    countWordFrequencies(countWords(args[0], args[2]));
                     break;
                 case "-num_unique":
-                    countUniqueWords();
+                    countUniqueWords(countWords(args[0], args[2]));
                     break;
                 default:
                     System.out.println("Invalid choice for second argument");
@@ -72,7 +50,26 @@ public class WordCount {
      * @return An array of data couns
      * @throws IOException Thrown if there's an exception wile reading
      */
-    private static DataCount<String>[] countWords() throws IOException {
+    public static DataCount<String>[] countWords(String dataStructure, String filename) throws IOException {
+        FileWordReader fileWordReader = new FileWordReader(filename);
+        DataCounter<String> wordCounter;
+
+        switch(dataStructure) {
+            case "-b":
+                wordCounter = new BinarySearchTree<>();
+                break;
+            case "-a":
+                wordCounter = new AVLTree<>();
+                break;
+            case "-h":
+                wordCounter = new HashTable();
+                break;
+            default:
+                wordCounter = new BinarySearchTree<>();
+                System.out.println("Invalid data structure. Using BST by default.");
+                break;
+        }
+
         String word;
         while((word = fileWordReader.nextWord()) != null) {
             wordCounter.incCount(word);
@@ -97,12 +94,8 @@ public class WordCount {
     /**
      * Counts the word frequencies in a document and lists them
      * first by frequency, then lexicographically.
-     *
-     * @throws IOException Thrown if there's an exception while reading the file
      */
-    private static void countWordFrequencies() throws IOException {
-        DataCount<String>[] dataCounts = countWords();
-
+    private static void countWordFrequencies(DataCount<String>[] dataCounts) {
         sort(dataCounts, (count1, count2) -> count2.count - count1.count);
 
         System.out.println("Ordered by Frequency:");
@@ -116,11 +109,9 @@ public class WordCount {
 
     /**
      * Prints the number of unique words in a document.
-     *
-     * @throws IOException Thrown if there's an exception while reading the file
      */
-    private static void countUniqueWords() throws IOException {
-        System.out.println("Unique words: " + countWords().length);
+    private static void countUniqueWords(DataCount<String>[] dataCounts) {
+        System.out.println("Unique words: " + dataCounts.length);
     }
 
     /**

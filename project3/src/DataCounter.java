@@ -28,7 +28,7 @@ class DataCount<E> {
     }
     /**
      * To return a string that tells data and its count
-     * /
+     */
     public String toString()
     {
     	return data + ", count: " + count;
@@ -43,7 +43,7 @@ class DataCount<E> {
  * "genericize" the code as much as possible. DataCounter counts elements of an
  * unconstrained generic type E, and BinarySearchTree restricts E to Comparable
  * types. HashTable is String-only, because you'll be implementing your own
- * hashcode and will need access to the actual String contents.
+ * hashString and will need access to the actual String contents.
  * 
  * @param <E> The type of data to be counted.
  */

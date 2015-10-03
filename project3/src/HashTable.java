@@ -60,18 +60,15 @@ public class HashTable implements DataCounter<String> {
         if(node == null) {
             buckets[hash] = new Node(data);
             return true;
-        	} 
-	else {
-           	 while(node != null && !node.data.equals(data)) 
-		{
-                	node = node.next;
-            	}
+        } else {
+            while(node != null && !node.data.equals(data)) {
+                node = node.next;
+            }
 
             if(node == null) {
                 buckets[hash] = new Node(data, buckets[hash]);
                 return true;
-            } else 
-	{
+            } else {
                 node.count++;
                 return false;
             }
@@ -86,41 +83,31 @@ public class HashTable implements DataCounter<String> {
         Node[] buckets = new Node[this.buckets.length * 2];
         for(Node node : this.buckets) {
             for(; node != null; node = node.next) {
-                for(int i = 0; i < node.count; i++) {
-                    insert(buckets, node.data);
-                }
+                put(buckets, node.data, node.count);
             }
         }
         this.buckets = buckets;
     }
 
-	private void put(String data, int count)
-	{
-		int hash = hashString(data) % buckets.length;
+    private void put(Node[] buckets, String data, int count) {
+        int hash = hashString(data) % buckets.length;
         Node node = buckets[hash];
-        if (node != null)
-        {
-        	while(node != null && !node.data.equals(data)) 
-        	{
+        if(node != null) {
+            while(node != null && !node.data.equals(data)) {
                 node = node.next;
-        	}
-        	if (node != null)
-        	{
-        		node.count = count;
-        	}
-        	else
-        	{
-        		buckets[hash] = new Node(data, buckets[hash]);
-        		buckets[hash].count = count;
-        	}
+            }
+            if(node != null) {
+                node.count = count;
+            } else {
+                buckets[hash] = new Node(data, buckets[hash]);
+                buckets[hash].count = count;
+            }
+        } else {
+            buckets[hash] = new Node(data);
+            buckets[hash].count = count;
         }
-        else
-        {
-        	buckets[hash] = new Node(data);
-        	buckets[hash].count = count;
-        }
-	
-	}
+
+    }
 
 
     private int hashString(String str) {
@@ -149,5 +136,5 @@ public class HashTable implements DataCounter<String> {
         }
     }
 
-	
+
 }
