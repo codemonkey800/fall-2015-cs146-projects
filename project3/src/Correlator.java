@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Program that calculates the correlation between
@@ -34,92 +35,35 @@ public class Correlator {
 
     }
 
-    private static int getTotalCount(DataCount<String>[] count) {
+    private static int getTotalCount(DataCount<String>[] dataCounts) {
         int totalWords = 0;
-        for(DataCount<String> c : count) {
-            totalWords += c.count;
+        for(DataCount<String> dataCount : dataCounts) {
+            totalWords += dataCount.count;
         }
-        System.out.println("total words: " + totalWords);
         return totalWords;
-
     }
 
-//    private static DataCount<String>[] frequency(DataCount<String>[] count)
-//    {
-//    	int index = 0;
-//    	DataCount<String>[] frequencies = wordCounter.getCounts();
-//    	for (int i  = 0; i < count.length; i++)
-//    	{
-//    		double freq = count[i].count/(getTotalCount(count));
-//    		System.out.println("frequency for " + count[i].toString() + ": fraction - " + freq);
-//    		if (freq < 0.01 && freq > 0.0001)
-//    		{
-//    			frequencies[index] = count[i];
-//    			//frequencies[index].data = count[i].data;
-//    			frequencies[index].count = (int) freq;
-//    			index++;
-//    		}
-//    	}	
-//    	for (DataCount<String> f :frequencies)    
-//    	{
-//    		System.out.print(f.count + " ");
-//    	}
-//    	return frequencies;	
-//}
-
-
-    private static HashMap<String, Double> frequency(DataCount<String>[] count) {
-        int index = 0;
-        int totalCount = getTotalCount(count);
-        System.out.println(totalCount);
-        HashMap<String, Double> frequencies = new HashMap<>();
-        for(int i = 0; i < count.length; i++) {
-            System.out.println(count[i].count);
-
-            double freq = (double) count[i].count / (double) totalCount;
-            System.out.println("frequency for " + count[i].toString() + ": fraction - " + freq);
-            if(freq < 0.01 && freq > 0.0001) {
-                frequencies.put(count[i].data, freq);
-                //frequencies[index].data = count[i].data;
-
-
+    private static Map<String, Double> frequency(DataCount<String>[] dataCounts) {
+        double totalCount = (double) getTotalCount(dataCounts);
+        Map<String, Double> frequencies = new HashMap<>();
+        for(DataCount<String> dataCount : dataCounts) {
+            double frequency = (double) dataCount.count / totalCount;
+            if(frequency < 0.01 && frequency > 0.0001) {
+                frequencies.put(dataCount.data, frequency);
             }
-        }
-        for(String f : frequencies.keySet()) {
-            System.out.print(frequencies.get(f) + " ");
         }
         return frequencies;
     }
 
-//    private static double differenceMetric(DataCount<String>[] c1, DataCount<String>[] c2)
-//    {
-//    	double sum = 0;
-//    	DataCount<String>[] freq1 = frequency(c1);
-//		DataCount<String>[] freq2 = frequency(c2);
-//    	for (int i = 0; i < freq1.length; i++)
-//    	{
-//    		for (int j = 0; j < freq2.length; j++)
-//    		{
-//    			if (freq1[i].data == freq2[j].data)
-//    			{
-//    				
-//    				double diff = Math.abs(freq1[i].count - freq2[j].count);
-//    				sum += diff*diff;
-//    			}
-//    		}
-//    	}
-//    	return sum;
-//    }
-
     private static double differenceMetric(DataCount<String>[] c1, DataCount<String>[] c2) {
         double sum = 0;
-        HashMap<String, Double> freq1 = frequency(c1);
-        HashMap<String, Double> freq2 = frequency(c2);
-        for(String f : freq1.keySet()) {
-            for(String fr : freq2.keySet()) {
-                if(f.equals(fr)) {
+        Map<String, Double> frequencies1 = frequency(c1);
+        Map<String, Double> frequencies2 = frequency(c2);
+        for(String key1 : frequencies1.keySet()) {
+            for(String key2 : frequencies2.keySet()) {
+                if(key1.equals(key2)) {
 
-                    double diff = Math.abs(freq1.get(f) - freq2.get(fr));
+                    double diff = Math.abs(frequencies1.get(key1) - frequencies2.get(key2));
                     sum += diff * diff;
                 }
             }

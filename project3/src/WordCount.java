@@ -7,9 +7,6 @@ import java.util.Comparator;
  * descending order.
  */
 public class WordCount {
-    private static FileWordReader      fileWordReader;
-    private static DataCounter<String> wordCounter;
-
     public static void main(String[] args) {
         if(args.length != 3) {
             System.out.println("Usage: [-b | -a | -h] [-frequency | -num_unique] <filename>\n");
