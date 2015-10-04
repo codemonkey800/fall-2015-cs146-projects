@@ -1,0 +1,172 @@
+\documentclass[12pt, oneside, letter]{article}
+
+\usepackage{amsmath, mathtools, amsthm}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[paperwidth=8.5in, paperheight=11in, margin=1.0in]{geometry}
+
+\pagenumbering{gobble}
+
+%Code to make fancy square root
+\usepackage{letltxmacro}
+\makeatletter
+\let\oldr@@t\r@@t
+\def\r@@t#1#2{%
+\setbox0=\hbox{$\oldr@@t#1{#2\,}$}\dimen0=\ht0
+\advance\dimen0-0.2\ht0
+\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+{\box0\lower0.4pt\box2}}
+\LetLtxMacro{\oldsqrt}{\sqrt}
+\renewcommand*{\sqrt}[2][\ ]{\oldsqrt[#1]{#2}}
+\makeatother
+
+\LetLtxMacro{\oldfrac}{\frac}
+\renewcommand*{\frac}[2]{\oldfrac{\displaystyle #1}{\displaystyle #2}}
+%End code
+
+% Random commands for maths
+\newcommand{\eq}[1]{$\displaystyle #1$} % For inline maths
+\newcommand{\equ}[1]{\begin{equation*}#1\end{equation*}} % For mathematical displays
+\newcommand{\equn}[1]{\begin{equation}#1\end{equation}} % For mathematical displays with numbers
+\newcommand{\equs}[1]{\begin{equation*}\begin{split}#1\end{split}\end{equation*}} % For mathematical displays with splitting
+\newcommand{\vecb}[1]{\mathbf{#1}} % Bold vectors
+\newcommand{\vecu}[1]{\hat{\mathbf{#1}}} % Bold unit vectors
+
+\newcommand{\env}[2]{
+    \begin{#1}
+        #2
+    \end{#1}
+}
+
+%\linespread{2.0}
+%\setlength{\jot}{0.2in}
+
+\begin{document}
+
+    \env{center} {
+        count.sh Script Benchmark
+
+        \vspace*{0.1in}
+
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Test Case(\#) & 1      & 2      & 3      & 4      & 5      & 6      & 7      & 8      & 9      & 10 \\
+            \hline
+            Time(s)       & 0.052s & 0.040s & 0.088s & 0.052s & 0.048s & 0.056s & 0.048s & 0.056s & 0.048s & 0.048s \\
+            \hline
+        \end{tabular}
+
+        \vspace*{0.1in}
+
+        Average = 0.0536s
+    }
+
+    \env{center} {
+        WordCount Frequency Benchmark - BST
+
+        \vspace*{0.1in}
+
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Test Case(\#) & 1      & 2      & 3      & 4      & 5      & 6      & 7      & 8      & 9      & 10 \\
+            \hline
+            Time(s)       & 0.832s & 0.788s & 0.848s & 0.900s & 0.792s & 0.812s & 0.768s & 0.832s & 0.940s & 0.780s \\
+            \hline
+        \end{tabular}
+
+        \vspace*{0.1in}
+
+        Average = 0.829s
+    }
+
+    \env{center} {
+        WordCount Frequency Benchmarks - AVL Tree
+
+        \vspace*{0.1in}
+
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Test Case(\#) & 1      & 2      & 3      & 4      & 5      & 6      & 7      & 8      & 9      & 10 \\
+            \hline
+            Time(s)       & 1.824s & 1.816s & 1.884s & 1.956s & 1.848s & 1.836s & 1.836s & 1.948s & 1.832s & 1.916s \\
+            \hline
+        \end{tabular}
+
+        \vspace*{0.1in}
+
+        Average = 1.869s
+    }
+    
+    \env{center} {
+        WordCount Frequency Benchmarks - Hashtable
+
+        \vspace*{0.1in}
+
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Test Case(\#) & 1      & 2      & 3      & 4      & 5      & 6      & 7      & 8      & 9      & 10 \\
+            \hline
+            Time(s)       & 0.776s & 0.844s & 0.816s & 0.856s & 0.852s & 0.900s & 0.804s & 0.776s & 0.888s & 0.836s\\
+            \hline
+        \end{tabular}
+
+        \vspace*{0.1in}
+
+        Average = 0.834s
+    }
+
+    \env{center} {
+        WordCount Correlator Benchmarks - BST
+
+        \vspace*{0.1in}
+
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Test Case(\#) & 1      & 2      & 3      & 4      & 5      & 6      & 7      & 8      & 9      & 10 \\
+            \hline
+            Time(s)       & 0.452s & 0.564s & 0.464s & 0.492s & 0.528s & 0.460s & 0.496s & 0.492s & 0.484s & 0.464s\\
+            \hline
+        \end{tabular}
+
+        \vspace*{0.1in}
+
+        Average = 0.490s
+    }
+
+    \env{center} {
+        WordCount Correlator Benchmarks - AVL Tree
+
+        \vspace*{0.1in}
+
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Test Case(\#) & 1      & 2      & 3      & 4      & 5      & 6      & 7      & 8      & 9      & 10 \\
+            \hline
+            Time(s)       & 1.804s & 1.728s & 1.752s & 1.728s & 1.700s & 1.748s & 1.748s & 1.800s & 1.732s & 1.764s\\
+            \hline
+        \end{tabular}
+
+        \vspace*{0.1in}
+
+        Average = 1.750s
+    }
+
+    \env{center} {
+        WordCount Correlator Benchmarks - Hashtable
+
+        \vspace*{0.1in}
+
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Test Case(\#) & 1      & 2      & 3      & 4      & 5      & 6      & 7      & 8      & 9      & 10 \\
+            \hline
+            Time(s)       & 0.524s & 0.492s & 0.508s & 0.540s & 0.496s & 0.580s & 0.520s & 0.528s & 0.536s & 0.520s\\
+            \hline
+        \end{tabular}
+
+        \vspace*{0.1in}
+
+        Average = 0.524s
+    }
+\end{document}
