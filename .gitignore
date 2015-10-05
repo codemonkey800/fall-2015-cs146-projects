@@ -21,3 +21,6 @@
 # Build shit
 **/bin
 **/build
+
+# PDFs
+**/*.pdf
