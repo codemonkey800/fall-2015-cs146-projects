@@ -1,4 +1,4 @@
-//Jeremy Asuncion, Phyllis Lau
+//Jeremy Asuncion, Phyllis La
 
 /**
  * Simple class to hold a piece of data and its count. The class has package
