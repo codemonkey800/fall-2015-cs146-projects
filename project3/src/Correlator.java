@@ -34,7 +34,13 @@ public class Correlator {
         System.out.println("\nDifference metric: " + differenceMetric(count1, count2));
 
     }
-
+    
+    /**
+     * Gets the total count of words in the document
+     * 
+     * @param dataCounts Array holding all of document's words and counts
+     * @return The total count
+     */
     private static int getTotalCount(DataCount<String>[] dataCounts) {
         int totalWords = 0;
         for(DataCount<String> dataCount : dataCounts) {
@@ -42,7 +48,13 @@ public class Correlator {
         }
         return totalWords;
     }
-
+    
+    /**
+     * Finds the frequency of all words in a document and removes all not useful frequencies
+     * 
+     * @param dataCounts Array holding all of document's words and counts
+     * @return A map holding words and their frequencies
+     */
     private static Map<String, Double> frequency(DataCount<String>[] dataCounts) {
         double totalCount = (double) getTotalCount(dataCounts);
         Map<String, Double> frequencies = new HashMap<>();
@@ -55,7 +67,14 @@ public class Correlator {
         }
         return frequencies;
     }
-
+    
+    /**
+     * Gets the difference metric between the two documents
+     * 
+     * @param c1 An array holding the first document's words and their frequencies
+     * @param c2 An array holding the second document's words and their frequencies
+     * @return The difference metric
+     */
     private static double differenceMetric(DataCount<String>[] c1, DataCount<String>[] c2) {
         System.out.println("Frequencies for first file:");
         Map<String, Double> frequencies1 = frequency(c1);
