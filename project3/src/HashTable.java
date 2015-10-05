@@ -53,7 +53,14 @@ public class HashTable implements DataCounter<String> {
         }
         if(insert(buckets, data)) size++;
     }
-
+    
+    /**
+     * Helper method to add elements into hashtable
+     * 
+     * @param buckets An array of nodes
+     * @param data The element to add to the hashtable
+     * @return Boolean value depending on whether insertion is successful
+     */
     private boolean insert(Node[] buckets, String data) {
         int hash = hashString(data) % buckets.length;
         Node node = buckets[hash];
@@ -74,11 +81,19 @@ public class HashTable implements DataCounter<String> {
             }
         }
     }
-
+    
+    /**
+     * Finding the load factor of the hashtable 
+     * 
+     * @return the load factor of the hashtable
+     */
     private double calculateLoadFactor() {
         return (double) size / (double) buckets.length;
     }
 
+    /**
+     * To rehash (create a bigger array of nodes and insert nodes again)
+     */
     private void rehash() {
         Node[] buckets = new Node[this.buckets.length * 2];
         for(Node node : this.buckets) {
@@ -88,7 +103,14 @@ public class HashTable implements DataCounter<String> {
         }
         this.buckets = buckets;
     }
-
+    
+    /**
+     * Puts data into its corresponding bucket and updates its count
+     * 
+     * @param buckets The array of nodes
+     * @param data The element to insert
+     * @param count The element's count
+     */
     private void put(Node[] buckets, String data, int count) {
         int hash = hashString(data) % buckets.length;
         Node node = buckets[hash];
@@ -109,7 +131,12 @@ public class HashTable implements DataCounter<String> {
 
     }
 
-
+    /**
+     * Returns the hash function for inserting elements into hashtable
+     * 
+     * @param the element to insert
+     * @return the index to insert the element 
+     */
     private int hashString(String str) {
         final int multiplier = 29;
         int sum = 0;
@@ -119,7 +146,10 @@ public class HashTable implements DataCounter<String> {
 
         return sum;
     }
-
+    
+    /**
+     * An implementation of a Node
+     */
     private class Node {
         private String data;
         private int    count;
