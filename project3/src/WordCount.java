@@ -5,6 +5,9 @@ import java.util.Comparator;
 /**
  * An executable that counts the words in a files and prints out the counts in
  * descending order.
+ *
+ * @author Jeremy Asuncion
+ * @author Phllis Lau
  */
 public class WordCount {
     public static void main(String[] args) {

@@ -1,5 +1,8 @@
 /**
  * Tests the AVL Tree implementation.
+ *
+ * @author Jeremy Asuncion
+ * @author Phyllis Lau
  */
 public class TestAVLTree {
     public static void main(String[] args) {

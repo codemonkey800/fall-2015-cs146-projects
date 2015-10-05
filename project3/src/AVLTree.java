@@ -1,3 +1,11 @@
+/**
+ * Implementation of a AVL tree. An AVL tree is a self-balancing binary search tree
+ * with a rigid balancing factor: two subtrees may differ at most by 1.
+ *
+ * @param <E> Some type
+ * @author Jeremy Asuncion
+ * @author Phyllis Lau
+ */
 public class AVLTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
     /**
      * {@inheritDoc}
