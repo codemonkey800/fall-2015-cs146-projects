@@ -1,4 +1,9 @@
-
+/**
+ * Tester for HashTable
+ *
+ * @author Jeremy Asuncion
+ * @author Phyllis Lau
+ */
 public class TestHashTable {
 
 	public static void main(String[] args)
