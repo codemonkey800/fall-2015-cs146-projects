@@ -1,8 +1,7 @@
+//Jeremy Asuncion, Phyllis Lau
+
 /**
  * Implementation of an AVL Tree
- *
- * @author Jeremy Asuncion
- * @author Phyllis Lau
  */
 
 public class AVLTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
