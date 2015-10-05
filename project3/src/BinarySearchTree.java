@@ -1,9 +1,4 @@
-/**
- * Implementation of a BST Tree 
- *
- * @author Jeremy Asuncion
- * @author Phyllis Lau
- */
+//Jeremy Asuncion, Phyllis Lau
 
 /**
  * BSTCounter implements the DataCounter interface using a binary search tree to
