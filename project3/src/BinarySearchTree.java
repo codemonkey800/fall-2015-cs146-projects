@@ -1,4 +1,4 @@
-//Jeremy Asuncion, Phyllis Lau
+//Jeremy Asuncion, Phyllis La
 
 /**
  * BSTCounter implements the DataCounter interface using a binary search tree to
