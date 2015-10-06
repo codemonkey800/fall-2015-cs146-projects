@@ -5,10 +5,6 @@ Our group consists of Jeremy Asuncion and Phyllis Lau. This project took us abou
 Before starting, we expected the hash table to be the fastest due to its average running time of O(1), 
 and expected BSTs and AVL trees to be slower.
 
-As it turns out, the BST is the fastest. We were wrong because we didn’t consider the extra time for the hash table 
-when it needed to insert more elements than it could hold. Therefore, rehashing contributes to additional time, 
-making the hash table actually slower than the BST. 
-
 In our benchmarks, BSTs turned out to be faster. From this, we were wrong in our expectations. 
 But there's a lot of things to take into account with these results. 
 One thing to consider is that the hashtable has to do rehashing when the load factor goes over 0.75, 

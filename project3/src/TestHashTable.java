@@ -24,20 +24,26 @@ public class TestHashTable {
 
         DataCount[] expected = {d, d1, d2, d3, d4, d5, d6, d7, d8};
 
+        boolean error = false;
 
         for(String s : data) {
             hash.incCount(s);
         }
 
-        boolean error = false;
-        int k = 0;
-        for(DataCount c : hash.getCounts()) {
-            if(!c.data.equals(expected[k].data) || c.count != expected[k].count) {
-                error = true;
-                break;
+        DataCount<String>[] dataCounts = hash.getCounts();
+        if(dataCounts.length != expected.length) {
+            error = true;
+        } else {
+            int k = 0;
+            for(DataCount<String> c : dataCounts) {
+                if(!c.data.equals(expected[k].data) || c.count != expected[k].count) {
+                    error = true;
+                    break;
+                }
+                k++;
             }
-            k++;
         }
+
         if(error) {
             System.out.println("Test failed");
         } else {
