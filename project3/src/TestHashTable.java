@@ -35,9 +35,9 @@ public class TestHashTable {
 		int k = 0;
 		for(DataCount c: hash.getCounts())
 		{
-			if (!c.equals(expected[k]))
+			if (!c.data.equals(expected[k].data) || c.count != expected[k].count)
 			{
-				error = false;
+				error = true;
 				break;
 			}
 			k++;
