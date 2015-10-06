@@ -134,7 +134,7 @@ public class HashTable implements DataCounter<String> {
     /**
      * Returns the hash function for inserting elements into hashtable
      * 
-     * @param the element to insert
+     * @param str element to insert
      * @return the index to insert the element 
      */
     private int hashString(String str) {
