@@ -1,0 +1,24 @@
+apply plugin: 'java'
+
+sourceSets {
+    main.java.srcDir 'src'
+    test.java.srcDir 'test'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+task wordCountJar(type: Jar, dependsOn: classes) {
+    baseName 'WordCount'
+    manifest {
+        attributes 'Main-Class': 'WordCount'
+    }
+    destinationDir = new File('jars')
+    from sourceSets.main.output.classesDir
+    include '*.class'
+}
