@@ -9,7 +9,7 @@ import java.util.function.BiFunction;
  * descending order.
  *
  * @author Jeremy Asuncion
- * @author Phllis Lau1
+ * @author Phyllis Lau
  */
 public class WordCount
 {
