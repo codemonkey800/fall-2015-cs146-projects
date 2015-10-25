@@ -34,13 +34,13 @@ public class WordCount
             switch(args[1])
             {
                 case "-is":
-                    countWordFrequencies(countWords(args[0], args[2]), WordCount::insertionSort);
+                    countWordFrequencies(countWords(args[0], args[2]), WordCountQS::insertionSort);
                     break;
                 case "-qs":
-                    countWordFrequencies(countWords(args[0], args[2]), WordCount::quickSort);
+                    countWordFrequencies(countWords(args[0], args[2]), WordCountQS::quickSort);
                     break;
                 case "-ms":
-                    countWordFrequencies(countWords(args[0], args[2]), WordCount::mergeSort);
+                    countWordFrequencies(countWords(args[0], args[2]), WordCountQS::mergeSort);
                     break;
                 default:
                     System.out.println("Invalid choice for second argument");
@@ -170,9 +170,63 @@ public class WordCount
             dataCounts[j + 1] = key;
         }
     }
-
+    
+    /**
+     * Implementation of quick sort. Sorts an array of data counts using a comparator
+     * @param dataCounts The array of data counts
+     * @param comparator The comparator to compare data
+     */
     private static <E> void quickSort(DataCount<E>[] dataCounts, Comparator<DataCount<E>> comparator) {
-        // TODO Implemented by Phil
+ 
+  
+    	sort(dataCounts, 0, dataCounts.length-1, comparator);
+    
+    }
+    
+    private static <E> void sort(DataCount<E>[] dataCounts, int left, int right, Comparator<DataCount<E>> comparator)
+    {
+    	if (left <= right)
+    	{
+    		return;
+    	}
+    	
+    	if (left + right > QUICK_SORT_CUTOFF) 
+    	{
+    		int i = left;
+    		int j = right+1;
+    		DataCount<E> pivot = dataCounts[left];
+    		while (true)
+    		{
+    		while (comparator.compare(dataCounts[++i], pivot) < 0)
+    			{
+    				if (i == right)
+    					break;
+    				}
+    		while (comparator.compare(pivot, dataCounts[--j]) > 0)
+    		{
+    			if (j == left)
+    				break;
+    		}
+    		
+    		if (i >= j)
+    		{
+    			break;
+    		}
+    		
+    		DataCount<E> toSwap = dataCounts[i];
+    		dataCounts[i] = dataCounts[j];
+    		dataCounts[j] = toSwap;
+    		}
+    		
+    		DataCount<E> toSwapPivot = dataCounts[left];
+    		dataCounts[left] = dataCounts[j];
+    		dataCounts[j] = toSwapPivot;
+    	}
+    	
+    	else
+    	{
+    		insertionSort(dataCounts, left, right, comparator);
+    	}
     }
 
     /**
